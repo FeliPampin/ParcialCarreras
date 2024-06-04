@@ -31,7 +31,9 @@ blanco =    UnAuto "Blanco"     25 1000
 carrera :: Carrera
 carrera = UnaCarrera [rojo, azul, verde, amarillo, naranja, violeta, rosa, negro, blanco] []
 
--- 1a
+------------------------------------------------------------------------------------------------------
+--------------------------------------------1a--------------------------------------------------------
+------------------------------------------------------------------------------------------------------
 
 estaCerca :: Auto -> Auto -> Bool
 estaCerca auto1 auto2
@@ -79,3 +81,25 @@ cuantosTieneAdelante (auto1:[]) auto posicion
 cuantosTieneAdelante (auto1:siguientes) auto posicion
     | verificarSiSonDistintos auto1 auto && distancia auto1 > distancia auto = cuantosTieneAdelante siguientes auto (posicion +1)
     | otherwise = cuantosTieneAdelante siguientes auto posicion
+
+
+------------------------------------------------------------------------------------------------------
+--------------------------------------------2a--------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+
+correr :: Auto -> Number -> Auto
+correr auto = asignarNuevaDistancia auto . calcularNuevaDistancia auto
+
+calcularNuevaDistancia :: Auto -> Number -> Number
+calcularNuevaDistancia auto tiempo = distancia auto + (tiempo * velocidad auto)
+
+asignarNuevaDistancia :: Auto -> Number -> Auto
+asignarNuevaDistancia auto distanciaNueva = auto {distancia = distanciaNueva}
+
+-- 2bi
+
+modificarVelocidad :: Auto -> Auto
+modificarVelocidad auto = auto {velocidad = nuevaVelocidad (velocidad auto)} 
+
+nuevaVelocidad :: Number -> Number
+nuevaVelocidad velocidad = velocidad + 1
