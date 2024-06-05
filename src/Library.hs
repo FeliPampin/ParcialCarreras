@@ -98,8 +98,18 @@ asignarNuevaDistancia auto distanciaNueva = auto {distancia = distanciaNueva}
 
 -- 2bi
 
-modificarVelocidad :: Auto -> Auto
-modificarVelocidad auto = auto {velocidad = nuevaVelocidad (velocidad auto)} 
+modificarVelocidad :: Auto -> Number -> Auto
+modificarVelocidad auto variacion
+    | variacion == 0 = auto
+    | variacion > 0 = auto {velocidad = nuevaVelocidadNVeces auto variacion}
+    | otherwise = auto {velocidad = velocidad auto - nuevaVelocidadNVeces auto variacion}
 
 nuevaVelocidad :: Number -> Number
 nuevaVelocidad velocidad = velocidad + 1
+
+nuevaVelocidadNVeces :: Auto -> Number -> Number
+nuevaVelocidadNVeces auto variacion
+    | variacion == 0 = velocidad auto
+    | variacion > 0 = nuevaVelocidadNVeces (auto {velocidad = nuevaVelocidad (velocidad auto)}) (variacion - 1)
+    | variacion < 0 && velocidad auto /= 0 = nuevaVelocidadNVeces (auto {velocidad = nuevaVelocidad (velocidad auto - 2)}) (variacion - 1)
+    | otherwise = velocidad auto
